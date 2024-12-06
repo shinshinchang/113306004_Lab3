@@ -1,8 +1,11 @@
+const MAX_ATTEMPTS = 7;
 let min = 0;
 let max = 100;
 const password = Math.floor(Math.random() * (99)) + 1;
-let attemptsLeft = 7
+let attemptsLeft = MAX_ATTEMPTS;
+let gameDiv = document.getElementById("game");
 let resultDiv = document.getElementById("result");
+let isCorrect = false;
 
 while (attemptsLeft > 0) {
     let guess = prompt(`請輸入 ${min}-${max} 之間的數字\n還剩下${attemptsLeft}次機會`);
@@ -19,24 +22,27 @@ while (attemptsLeft > 0) {
         continue;
     }
 
+    attemptsLeft--;
+
     if (guess === password) {
         alert("恭喜你答對了！");
         resultDiv.innerHTML = '<img src="correct.jpg" alt="Correct">';
+        isCorrect = true;
         break;
     }
-    else if (guess < password) {
-        min = guess;
-        alert(`新的範圍是 ${min}-${max}`);
+    else if (attemptsLeft > 0) {
+        if (guess < password) {
+            min = guess;
+            alert(`新的範圍是 ${min}-${max}`);
+        }
+        else {
+            max = guess;
+            alert(`新的範圍是 ${min}-${max}`);
+        }
     }
-    else {
-        max = guess;
-        alert(`新的範圍是 ${min}-${max}`);
+
+    if (!isCorrect && attemptsLeft === 0) {
+        alert(`遊戲結束，正確答案是：${password}`);
+        resultDiv.innerHTML = '<img src="wrong.jpg" alt="Wrong">';
     }
-}
-
-attemptsLeft--;
-
-if (attemptsLeft === 0) {
-    alert(`遊戲結束，正確答案是：${password}`);
-    resultDiv.innerHTML = '<img src="wrong.jpg" alt="Wrong">';
 }
