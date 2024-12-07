@@ -1,7 +1,7 @@
 const MAX_ATTEMPTS = 7;
-let min = 0;
+let min = 1;
 let max = 100;
-const password = Math.floor(Math.random() * (99)) + 1;
+const password = Math.floor(Math.random() * 100) + 1;
 let attemptsLeft = MAX_ATTEMPTS;
 let gameDiv = document.getElementById("game");
 let resultDiv = document.getElementById("result");
